@@ -1,34 +1,214 @@
 @import "tailwindcss";
 
 :root {
-    --background: #0a0a0a;
+    /* 1. Үндсэн өнгө */
+    --primary: #0a0a0a;
+    /* Таны "Primary" буюу үндсэн хар өнгө */
+    --background-light: #ffffff;
+    --surface-dark: #0f141a;
+
+    /* 2. Ашиглах хувьсагчууд */
+    --background: var(--primary);
+    /* Вэбсайт энэ өнгөөр эхэлнэ */
     --foreground: #ededed;
-    --surface: rgba(255, 255, 255, 0.04);
-    --border: rgba(255, 255, 255, 0.10);
-    --accent-500: #00bfa6;
+    --surface: var(--surface-dark);
+    --border: rgba(255, 255, 255, 0.1);
+
+    --accent-500: #87dcc4;
+    /* Үндсэн чимэг өнгө (Ногоон) */
     --accent-400: #7c3aed;
+    --accent-hover: #02d6ba44;
+    /* Туслах чимэг өнгө (Нил ягаан) */
+
+    /* 3. Бусад туслах өнгөнүүд */
+    --muted-foreground: #cfcfd8;
+    --error: #ff4d4d;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --surface-hover: rgba(255, 255, 255, 0.08);
+    --overlay: rgba(0, 0, 0, 0.407);
 }
 
 @theme inline {
+    /* Colors - Backgrounds */
+    --color-primary: var(--primary);
     --color-background: var(--background);
+    --color-background-light: var(--background-light);
+
+    /* Colors - Text */
     --color-foreground: var(--foreground);
-    --font-sans: var(--font-geist-sans);
-    --font-mono: var(--font-geist-mono);
+
+    /* Colors - Surface & Borders */
+    --color-surface: var(--surface);
+    --color-surface-dark: var(--surface-dark);
+    --color-surface-hover: var(--surface-hover);
+    --color-border: var(--border);
+
+    /* Colors - Accents */
+    --color-accent-500: var(--accent-500);
+    --color-accent-400: var(--accent-400);
+    --color-accent-hover: var(--accent-hover);
+
+    /* Colors - Utilities */
+    --color-muted: var(--muted-foreground);
+    --color-error: var(--error);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-overlay: var(--overlay);
+
+    /* Typography */
+    --font-sans: "Inter", var(--font-inter), Arial, Helvetica, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+/* Glass effect header */
+.glass-header {
+    background: var(--primary);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Utility classes for accent colors */
+.fill-accent-500 {
+    fill: var(--accent-500);
+}
+
+.fill-accent-400 {
+    fill: var(--accent-400);
+}
+
+/* Text and background utilities that use CSS variables */
+.text-accent-500 {
+    color: var(--accent-500);
+}
+
+.hover-text-accent-500:hover {
+    color: var(--accent-500);
+}
+
+.bg-accent-500 {
+    background-color: var(--accent-500);
+}
+
+.hover-bg-accent-hover:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Core palette utilities tied to CSS variables */
+.text-foreground {
+    color: var(--foreground);
+}
+
+.text-muted {
+    color: var(--muted-foreground);
+}
+
+.bg-surface {
+    background-color: var(--surface);
+}
+
+.bg-surface-dark {
+    background-color: var(--surface-dark);
+}
+
+.border-surface {
+    border-color: var(--border);
+}
+
+/* Overlay mask using global overlay color */
+.bg-overlay {
+    background: var(--overlay);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--surface-hover);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus ring for accessibility */
+*:focus-visible {
+    outline: 2px solid var(--accent-500);
+    outline-offset: 2px;
+}
+
+/* Visual utilities for card/tabs styling */
+.tab-active {
+    border-color: var(--accent-500);
+    box-shadow: 0 0 0 4px rgba(135, 220, 196, 0.06);
+    color: var(--foreground);
+}
+
+.feature-accent {
+    border-left: 3px solid var(--accent-500);
+    padding-left: 1rem;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.card-surface {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.005));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.border-surface-hover {
+    border-color: var(--surface-hover);
 }
 
 body {
-    background: var(--background);
+    background-color: var(--background);
     color: var(--foreground);
-    font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
     background: color-mix(in oklab, var(--accent-500) 25%, transparent);
+}
+
+/* Marquee Animation */
+@keyframes scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-scroll {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    will-change: transform;
+    animation: scroll 30s linear infinite;
+
+    animation-play-state: running !important;
+}
+
+.animate-scroll:hover {
+    animation-play-state: running !important;
+}
+
+.animate-scroll>* {
+    flex-shrink: 0;
 }
